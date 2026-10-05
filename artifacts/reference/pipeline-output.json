@@ -1,0 +1,539 @@
+{
+  "schema_version": "0.2.0-experimental",
+  "input_tier": "lidar",
+  "processing_status": "partial_geometry_unvalidated",
+  "source_archive": "single_scan_with_ceiling.zip",
+  "stages": {
+    "lidar_reconstruction": {
+      "status": "completed_sparse_pose_projection",
+      "point_count": 330595
+    },
+    "common_geometry": {
+      "status": "partial",
+      "representation": "world_space_point_cloud",
+      "artifact": "world_points.npz"
+    },
+    "room_detection": {
+      "status": "floor_region_candidates_not_room_labels",
+      "candidate_count": 1
+    },
+    "room_connectivity": {
+      "status": "single_scan_adjacency_unknown",
+      "candidate_nodes": [
+        "floor_region_01"
+      ],
+      "edges": []
+    },
+    "global_alignment": {
+      "status": "odometry_only_drift_uncorrected",
+      "drift_ablation": "not_run"
+    },
+    "floorplan_graph": {
+      "status": "observed_floor_region_graph_only",
+      "candidate_regions": [
+        {
+          "cell_count": 1153,
+          "point_count": 34875,
+          "hull_xz_m": [
+            [
+              -2.8313,
+              6.9565
+            ],
+            [
+              -2.8293,
+              6.5895
+            ],
+            [
+              -2.8281,
+              6.3858
+            ],
+            [
+              -2.8246,
+              6.2632
+            ],
+            [
+              -2.537,
+              3.525
+            ],
+            [
+              -2.2563,
+              2.6123
+            ],
+            [
+              -1.4438,
+              1.1146
+            ],
+            [
+              -1.0715,
+              0.43
+            ],
+            [
+              -0.355,
+              -0.8687
+            ],
+            [
+              -0.3158,
+              -0.8947
+            ],
+            [
+              0.1288,
+              -1.0821
+            ],
+            [
+              0.2525,
+              -1.1055
+            ],
+            [
+              0.3579,
+              -1.1025
+            ],
+            [
+              0.4087,
+              -1.0848
+            ],
+            [
+              0.752,
+              -0.903
+            ],
+            [
+              5.543,
+              2.791
+            ],
+            [
+              5.6469,
+              2.9018
+            ],
+            [
+              5.7345,
+              3.0735
+            ],
+            [
+              5.7647,
+              3.1726
+            ],
+            [
+              5.7691,
+              3.2284
+            ],
+            [
+              5.7693,
+              5.7256
+            ],
+            [
+              5.7633,
+              8.0202
+            ],
+            [
+              5.7407,
+              8.1264
+            ],
+            [
+              5.6685,
+              8.2717
+            ],
+            [
+              5.5586,
+              8.4865
+            ],
+            [
+              5.4478,
+              8.6846
+            ],
+            [
+              5.1561,
+              9.1412
+            ],
+            [
+              5.1212,
+              9.1559
+            ],
+            [
+              -1.7077,
+              9.1551
+            ],
+            [
+              -2.1706,
+              9.1507
+            ],
+            [
+              -2.2396,
+              9.1498
+            ],
+            [
+              -2.4449,
+              9.1006
+            ],
+            [
+              -2.4626,
+              9.0726
+            ],
+            [
+              -2.8278,
+              8.294
+            ],
+            [
+              -2.83,
+              8.129
+            ],
+            [
+              -2.8312,
+              7.173
+            ]
+          ],
+          "observed_hull_area_m2": 70.2067,
+          "candidate_id": "floor_region_01"
+        }
+      ]
+    },
+    "damage_detection": {
+      "status": "not_implemented",
+      "labels_available": false
+    },
+    "concealed_damage": {
+      "status": "not_implemented"
+    },
+    "confidence_calibration": {
+      "status": "not_calibrated",
+      "intervals": null
+    },
+    "render": {
+      "status": "geometry_preview_only",
+      "path": "geometry-preview.svg"
+    }
+  },
+  "coordinate_assumptions": {
+    "depth_unit": "millimeters_inferred_from_value_range; not documented in archive",
+    "camera_axes": "computer_vision_x_right_y_down_z_forward",
+    "pose_axes": "recorded_camera_to_world_quaternion",
+    "confidence_filter": "per-frame nonzero confidence median",
+    "intrinsics": "per-frame RGB intrinsics scaled to depth-image dimensions"
+  },
+  "floor_geometry_candidate": {
+    "surface_status": "candidate_unvalidated",
+    "floor_point_count": 34923,
+    "planes": {
+      "floor_y_candidate_m": -1.4750009775161743,
+      "floor_bin_support": 32406,
+      "ceiling_y_candidate_m": 0.9249967336654663,
+      "ceiling_bin_support": 11011,
+      "ceiling_height_candidate_m": 2.4,
+      "histogram_bin_width_m": 0.05
+    },
+    "floor_region_candidates": [
+      {
+        "cell_count": 1153,
+        "point_count": 34875,
+        "hull_xz_m": [
+          [
+            -2.8313,
+            6.9565
+          ],
+          [
+            -2.8293,
+            6.5895
+          ],
+          [
+            -2.8281,
+            6.3858
+          ],
+          [
+            -2.8246,
+            6.2632
+          ],
+          [
+            -2.537,
+            3.525
+          ],
+          [
+            -2.2563,
+            2.6123
+          ],
+          [
+            -1.4438,
+            1.1146
+          ],
+          [
+            -1.0715,
+            0.43
+          ],
+          [
+            -0.355,
+            -0.8687
+          ],
+          [
+            -0.3158,
+            -0.8947
+          ],
+          [
+            0.1288,
+            -1.0821
+          ],
+          [
+            0.2525,
+            -1.1055
+          ],
+          [
+            0.3579,
+            -1.1025
+          ],
+          [
+            0.4087,
+            -1.0848
+          ],
+          [
+            0.752,
+            -0.903
+          ],
+          [
+            5.543,
+            2.791
+          ],
+          [
+            5.6469,
+            2.9018
+          ],
+          [
+            5.7345,
+            3.0735
+          ],
+          [
+            5.7647,
+            3.1726
+          ],
+          [
+            5.7691,
+            3.2284
+          ],
+          [
+            5.7693,
+            5.7256
+          ],
+          [
+            5.7633,
+            8.0202
+          ],
+          [
+            5.7407,
+            8.1264
+          ],
+          [
+            5.6685,
+            8.2717
+          ],
+          [
+            5.5586,
+            8.4865
+          ],
+          [
+            5.4478,
+            8.6846
+          ],
+          [
+            5.1561,
+            9.1412
+          ],
+          [
+            5.1212,
+            9.1559
+          ],
+          [
+            -1.7077,
+            9.1551
+          ],
+          [
+            -2.1706,
+            9.1507
+          ],
+          [
+            -2.2396,
+            9.1498
+          ],
+          [
+            -2.4449,
+            9.1006
+          ],
+          [
+            -2.4626,
+            9.0726
+          ],
+          [
+            -2.8278,
+            8.294
+          ],
+          [
+            -2.83,
+            8.129
+          ],
+          [
+            -2.8312,
+            7.173
+          ]
+        ],
+        "observed_hull_area_m2": 70.2067,
+        "candidate_id": "floor_region_01"
+      }
+    ],
+    "observed_floor_hull_xz_m": [
+      [
+        -2.8313,
+        6.9565
+      ],
+      [
+        -2.8293,
+        6.5895
+      ],
+      [
+        -2.8281,
+        6.3858
+      ],
+      [
+        -2.8246,
+        6.2632
+      ],
+      [
+        -2.537,
+        3.525
+      ],
+      [
+        -2.2563,
+        2.6123
+      ],
+      [
+        -1.4438,
+        1.1146
+      ],
+      [
+        -1.0715,
+        0.43
+      ],
+      [
+        -0.355,
+        -0.8687
+      ],
+      [
+        -0.3158,
+        -0.8947
+      ],
+      [
+        0.1288,
+        -1.0821
+      ],
+      [
+        0.2525,
+        -1.1055
+      ],
+      [
+        0.3579,
+        -1.1025
+      ],
+      [
+        0.4087,
+        -1.0848
+      ],
+      [
+        0.752,
+        -0.903
+      ],
+      [
+        5.543,
+        2.791
+      ],
+      [
+        5.6469,
+        2.9018
+      ],
+      [
+        5.7345,
+        3.0735
+      ],
+      [
+        5.7647,
+        3.1726
+      ],
+      [
+        5.7691,
+        3.2284
+      ],
+      [
+        5.7693,
+        5.7256
+      ],
+      [
+        5.7633,
+        8.0202
+      ],
+      [
+        5.7407,
+        8.1264
+      ],
+      [
+        5.6685,
+        8.2717
+      ],
+      [
+        5.5586,
+        8.4865
+      ],
+      [
+        5.4478,
+        8.6846
+      ],
+      [
+        5.1561,
+        9.1412
+      ],
+      [
+        5.1212,
+        9.1559
+      ],
+      [
+        -1.7077,
+        9.1551
+      ],
+      [
+        -2.1706,
+        9.1507
+      ],
+      [
+        -2.2396,
+        9.1498
+      ],
+      [
+        -2.4449,
+        9.1006
+      ],
+      [
+        -2.4626,
+        9.0726
+      ],
+      [
+        -2.8278,
+        8.294
+      ],
+      [
+        -2.83,
+        8.129
+      ],
+      [
+        -2.8312,
+        7.173
+      ]
+    ],
+    "observed_floor_hull_area_m2": 70.2067,
+    "area_semantics": "convex hull of observed near-floor returns; not a complete room-floor measurement",
+    "confidence_interval_m2": null
+  },
+  "dimensions": {
+    "wall_lengths_m": [],
+    "ceiling_height_m": 2.4,
+    "confidence_interval_m": null,
+    "status": "candidate_unvalidated"
+  },
+  "damage_regions": [],
+  "limitations": [
+    "The recorded odometry is used without loop closure or drift correction.",
+    "Depth units and camera-axis convention are inferred, not confirmed by capture metadata.",
+    "Floor and ceiling candidates come from height histograms, not validated plane/room segmentation.",
+    "This archive has no laser/tape ground truth, damage labels, or multi-room adjacency labels."
+  ]
+}

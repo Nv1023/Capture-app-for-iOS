@@ -1,0 +1,95 @@
+{
+  "model": "linear-local-depth-completion-v1",
+  "evaluation_kind": "capture-held-out prediction of the scanner's own high-confidence depth samples",
+  "not_physical_accuracy": true,
+  "label_source": "high-confidence depth PNG values used as pseudo-labels; no laser/tape truth",
+  "training_archives": [
+    "single_room.zip",
+    "single_scan_floor_only.zip"
+  ],
+  "holdout_archive": "single_scan_with_ceiling.zip",
+  "training_sample_count": 134016,
+  "feature_names": [
+    "depth_nw",
+    "depth_n",
+    "depth_ne",
+    "depth_w",
+    "depth_e",
+    "depth_sw",
+    "depth_s",
+    "depth_se",
+    "confidence_nw",
+    "confidence_n",
+    "confidence_ne",
+    "confidence_w",
+    "confidence_center",
+    "confidence_e",
+    "confidence_sw",
+    "confidence_s",
+    "confidence_se",
+    "x_normalized",
+    "y_normalized"
+  ],
+  "model_metrics": {
+    "rmse_native_depth_units": 2.953,
+    "mae_native_depth_units": 0.725,
+    "sample_count": 187392
+  },
+  "neighbor_median_baseline_metrics": {
+    "rmse_native_depth_units": 2.139,
+    "mae_native_depth_units": 0.63,
+    "sample_count": 187392
+  },
+  "feature_ablations": {
+    "all": {
+      "rmse_native_depth_units": 2.953,
+      "mae_native_depth_units": 0.725,
+      "sample_count": 187392
+    },
+    "no_position": {
+      "rmse_native_depth_units": 2.953,
+      "mae_native_depth_units": 0.728,
+      "sample_count": 187392
+    },
+    "depth_only": {
+      "rmse_native_depth_units": 2.952,
+      "mae_native_depth_units": 0.722,
+      "sample_count": 187392
+    },
+    "depth_plus_center_confidence": {
+      "rmse_native_depth_units": 2.952,
+      "mae_native_depth_units": 0.723,
+      "sample_count": 187392
+    }
+  },
+  "recommended_method": "neighbor_median_baseline",
+  "selection_reason": "The trained linear candidate did not beat the neighbor-median baseline on the held-out capture.",
+  "root_cause_hypothesis": "A global linear fit is less robust than local median aggregation around depth discontinuities; the tested feature ablations did not improve held-out sensor-depth prediction.",
+  "limitations": [
+    "Evaluates sensor-depth interpolation, not room dimensions or real-world distance error.",
+    "The Drive archives contain no laser/tape measurements or damage annotations.",
+    "Do not use this baseline to claim any case-study accuracy gate passes."
+  ],
+  "trained_candidate_coefficients": [
+    -2.7971108e-05,
+    -0.091682090214,
+    0.215091117715,
+    -0.106055945843,
+    0.41474652957,
+    0.527122403136,
+    -0.126582695711,
+    0.350328521996,
+    -0.182772964428,
+    0.002784441563,
+    -0.006099774495,
+    0.003948325877,
+    0.004716502625,
+    -0.002288390595,
+    -0.001175074856,
+    0.003347198409,
+    -0.004130106684,
+    0.001573980975,
+    4.255593e-06,
+    2.592821e-06
+  ]
+}

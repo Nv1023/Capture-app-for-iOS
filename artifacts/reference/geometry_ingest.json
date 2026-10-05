@@ -1,0 +1,33 @@
+{
+  "source_archive": "single_scan_with_ceiling.zip",
+  "point_count": 330595,
+  "frames_used": 488,
+  "frame_stride": 20,
+  "pixel_stride": 8,
+  "depth_scale_meters_per_unit": 0.001,
+  "bounds_percentiles_xyz_m": [
+    [
+      -3.3523,
+      -1.4986,
+      -1.1928
+    ],
+    [
+      1.4817,
+      -0.1737,
+      4.7567
+    ],
+    [
+      6.9936,
+      1.5871,
+      9.5056
+    ]
+  ],
+  "coordinate_assumptions": {
+    "depth_unit": "millimeters_inferred_from_value_range; not documented in archive",
+    "camera_axes": "computer_vision_x_right_y_down_z_forward",
+    "pose_axes": "recorded_camera_to_world_quaternion",
+    "confidence_filter": "per-frame nonzero confidence median",
+    "intrinsics": "per-frame RGB intrinsics scaled to depth-image dimensions"
+  },
+  "accuracy_status": "unvalidated_without_external_ground_truth"
+}

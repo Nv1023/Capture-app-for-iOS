@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f3ed">
+  <title>Roomfield | Capture workbench</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#workspace" aria-label="Roomfield workspace">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>roomfield<span class="brand-dot">.</span><small>FIELDWORK SYSTEMS</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE <span>LOCAL</span></div>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="workspace"><span class="nav-glyph">▦</span>Workspace</button>
+        <button class="nav-item" data-view="protocol"><span class="nav-glyph">↗</span>Capture protocol</button>
+        <button class="nav-item" data-view="benchmark"><span class="nav-glyph">▤</span>Benchmark</button>
+        <button class="nav-item" data-view="fix-loop"><span class="nav-glyph">⟳</span>Fix loop</button>
+        <button class="nav-item" data-view="compliance"><span class="nav-glyph">✓</span>Compliance</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-status"><span class="status-led"></span><div><strong>Private by default</strong><small>Files stay on this machine</small></div></div>
+        <div class="sidebar-foot">CASE STUDY BUILD <span>0.1.0</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="crumb"><span>FIELDWORK</span><b>/</b><strong id="crumb-current">Workspace</strong></div>
+        <div class="topbar-right"><span class="local-pill"><i></i> LOCAL MODE</span><span class="avatar">RF</span></div>
+      </header>
+
+      <section class="view active" id="view-workspace" aria-labelledby="page-title">
+        <div class="page-heading">
+          <div><p class="eyebrow">CAPTURE → VERIFY → REPORT</p><h1 id="page-title">Room capture, <em>with receipts.</em></h1><p class="lede">A local workbench for whole-property capture intake and evidence-led measurement.</p></div>
+          <div class="date-stamp"><span class="date-mark"></span><span>ROUND 1<br><b>EVIDENCE MODE</b></span></div>
+        </div>
+
+        <div class="notice" role="status"><span class="notice-icon">!</span><div><strong>LiDAR geometry is experimental; room-level results are not ready</strong><p>LiDAR runs build a pose-projected point cloud and unvalidated floor/ceiling candidates. Photo/video reconstruction, room graphs, drift correction, damage analysis, calibrated intervals, and physical accuracy gates remain incomplete.</p></div><span class="notice-code">PARTIAL<br>UNVALIDATED</span></div>
+
+        <div class="section-head"><div><p class="eyebrow">01 / INTAKE</p><h2>Start with the evidence</h2></div><span class="muted-count" id="capture-count">0 captures</span></div>
+
+        <div class="intake-layout">
+          <form class="intake-panel" id="capture-form">
+            <div class="panel-top"><span class="step-badge">01</span><div><h3>New capture</h3><p>Choose the source tier, then add its original files.</p></div></div>
+            <label class="field-label" for="capture-title">CAPTURE LABEL</label>
+            <input class="text-input" id="capture-title" name="title" maxlength="100" placeholder="e.g. Cedar House · ground floor">
+            <fieldset class="tier-picker">
+              <legend class="field-label">INPUT TIER</legend>
+              <label class="tier-option"><input type="radio" name="tier" value="photos" checked><span class="tier-icon">▧</span><span><strong>Photos</strong><small>2–8 stills / room</small></span></label>
+              <label class="tier-option"><input type="radio" name="tier" value="video"><span class="tier-icon">▷</span><span><strong>Video</strong><small>Walkthrough clip</small></span></label>
+              <label class="tier-option"><input type="radio" name="tier" value="lidar"><span class="tier-icon">⌗</span><span><strong>LiDAR</strong><small>Depth + pose bundle</small></span></label>
+            </fieldset>
+            <div class="upload-block">
+              <label class="field-label" for="capture-files">SOURCE FILES</label>
+              <label class="dropzone" id="dropzone" for="capture-files"><span class="upload-symbol">↑</span><strong id="upload-title">Choose room folders</strong><span id="upload-hint">One folder per room · 2–8 stills in each</span><span class="browse-link">Browse files</span></label>
+              <input id="capture-files" class="visually-hidden" type="file" multiple webkitdirectory directory accept="image/jpeg,image/png,image/heic,image/webp">
+              <p class="field-foot" id="tier-guidance">Photo names and folder structure are kept in the local raw bundle.</p>
+            </div>
+            <div class="form-actions"><span class="size-note">MAX 512 MB · LOCAL STORAGE</span><button class="button button-primary" type="submit"><span>＋</span> Validate capture</button></div>
+            <p class="form-message" id="form-message" aria-live="polite"></p>
+          </form>
+
+          <aside class="contract-panel">
+            <div class="panel-top"><span class="step-badge step-outline">02</span><div><h3>Output contract</h3><p>One versioned JSON record per capture.</p></div></div>
+            <div class="contract-list"><div><span class="contract-index">A</span><span>Rooms, walls &amp; openings</span><b>NULL</b></div><div><span class="contract-index">B</span><span>Stitched property plan</span><b>NULL</b></div><div><span class="contract-index">C</span><span>Damage &amp; scope lines</span><b>NULL</b></div><div><span class="contract-index">D</span><span>Intervals &amp; gate results</span><b>NULL</b></div></div>
+            <div class="contract-foot"><span class="status-led status-amber"></span> No fabricated measurements<br><small>Schema: <code>0.2.0-experimental</code></small></div>
+            <a class="schema-link" href="/schema/capture-output.schema.json" target="_blank" rel="noreferrer">View output schema <span>↗</span></a>
+          </aside>
+        </div>
+
+        <div class="section-head capture-head"><div><p class="eyebrow">02 / CAPTURE LOG</p><h2>Recent captures</h2></div><button class="text-action" id="refresh-captures">↻ &nbsp;Refresh</button></div>
+        <div class="capture-table-wrap"><table class="capture-table"><thead><tr><th>CAPTURE</th><th>INPUT TIER</th><th>ROOMS</th><th>INTAKE</th><th>RESULT</th><th></th></tr></thead><tbody id="capture-rows"><tr class="empty-row"><td colspan="6"><span class="empty-grid">▦</span><strong>No captures yet</strong><small>Validated local inputs will appear here.</small></td></tr></tbody></table></div>
+        <footer class="page-footer"><span>ROOMFIELD / APPLIED AI CASE STUDY</span><span>ALL METRICS REQUIRE RAW EVIDENCE</span></footer>
+      </section>
+
+      <section class="view" id="view-protocol" aria-labelledby="protocol-title">
+        <div class="page-heading compact-heading"><div><p class="eyebrow">FIELD GUIDE / DRAFT</p><h1 id="protocol-title">Capture <em>protocol.</em></h1><p class="lede">A repeatable route for a non-engineer with an iPhone 15 or newer.</p></div><span class="draft-tag">NOT YET FIELD-VALIDATED</span></div>
+        <div class="notice notice-compact"><span class="notice-icon">!</span><div><strong>Protocol status: draft</strong><p>Photo and video paths use the built-in Camera app. Drive RGB-D archives are recognized, but the live LiDAR capture app, device-specific units, and field protocol still need verification; do not substitute a vendor floor plan for sensor data.</p></div></div>
+        <div class="protocol-grid">
+          <article class="protocol-card"><div class="protocol-number">01 <span>PHOTOS</span></div><h2>Native Camera · stills</h2><p class="protocol-deck">Per-room folders, no depth or pose data.</p><ol><li>Install nothing. Use the iPhone Camera app in Photo mode; turn flash off.</li><li>Make one album folder per room. Take 4–6 stills, evenly spaced around the room.</li><li>Keep the phone level at chest height. Overlap each view by about one third; include every corner and doorway.</li><li>Hold still for a moment before each shot. Avoid people, mirrors, windows in direct glare, and ultra-wide zoom.</li><li>Transfer originals without edits. Keep room folders intact, then select all folders in the intake form.</li></ol><div class="protocol-meta"><span>2–8 STILL IMAGES / ROOM</span><span>ANY iPHONE 15+</span></div></article>
+          <article class="protocol-card"><div class="protocol-number">02 <span>VIDEO</span></div><h2>Native Camera · walkthrough</h2><p class="protocol-deck">One continuous handheld clip per property.</p><ol><li>Use Video mode at 1×, 30 fps. Clean the lens and check free storage first.</li><li>Start outside the first room. Walk slowly at a steady pace, pausing 2 seconds at each doorway.</li><li>Pan each room once, keeping the horizon level; walk through connectors and return to the start if safe.</li><li>Avoid fast turns, zooming, walking backwards, and abrupt exposure changes.</li><li>Transfer the original .MOV or .MP4 file without compression and upload it as one capture.</li></ol><div class="protocol-meta"><span>ONE CONTINUOUS CLIP</span><span>ANY iPHONE 15+</span></div></article>
+          <article class="protocol-card protocol-wide"><div class="protocol-number">03 <span>LIDAR</span></div><h2>Pro hardware · raw bundle recognized</h2><p class="protocol-deck">The shared archives provide a usable sensor format; the live capture app and walk-in protocol remain unverified.</p><div class="protocol-alert">A valid bundle includes synchronized depth frames, odometry, and camera intrinsics. This app checks filenames only; it cannot verify units, calibration, timestamps, or sensor quality.</div><div class="protocol-meta"><span>IPHONE 15 PRO OR NEWER PRO</span><span>REFERENCE DATA AVAILABLE · FIELD ROUTE PENDING</span></div></article>
+        </div>
+        <div class="section-head"><div><p class="eyebrow">DEVICE MATRIX</p><h2>Capability is not accuracy</h2></div></div>
+        <div class="matrix-wrap"><table class="data-table"><thead><tr><th>DEVICE</th><th>PHOTO TIER</th><th>VIDEO TIER</th><th>LIDAR TIER</th><th>ACCURACY CLAIM</th></tr></thead><tbody><tr><td>iPhone 15 or newer (non-Pro)</td><td><span class="table-yes">Input supported</span></td><td><span class="table-yes">Input supported</span></td><td><span class="table-no">No LiDAR</span></td><td class="table-muted">Not characterized</td></tr><tr><td>iPhone 15 Pro or newer Pro</td><td><span class="table-yes">Input supported</span></td><td><span class="table-yes">Input supported</span></td><td><span class="table-pending">Exporter pending</span></td><td class="table-muted">Not characterized</td></tr></tbody></table></div>
+      </section>
+
+      <section class="view" id="view-benchmark" aria-labelledby="benchmark-title">
+        <div class="page-heading compact-heading"><div><p class="eyebrow">EVIDENCE / ROUND 1</p><h1 id="benchmark-title">Benchmark <em>ledger.</em></h1><p class="lede">Gate thresholds alongside the sensor-depth experiment; physical accuracy still needs measured ground truth.</p></div><span class="draft-tag">0 OF 3 TIERS MEASURED</span></div>
+        <div class="benchmark-strip"><div><span>DRIVE CAPTURES</span><strong>3 RGB-D scans · 1 room each</strong></div><div><span>GROUND TRUTH</span><strong>No laser / tape labels</strong></div><div><span>INCUMBENT EXPORT</span><strong>Not submitted</strong></div><div><span>RAW SENSOR DATA</span><strong>16,711 depth/confidence pairs</strong></div></div>
+        <div class="notice notice-compact"><span class="notice-icon">↗</span><div><strong>Depth-completion training: candidate not selected</strong><p>Capture-held-out sensor-depth RMSE was 2.953 raw units for the trained linear model versus 2.139 for neighbor-median interpolation. These are sensor-consistency values, not room-dimension accuracy. <a class="inline-link" href="/training-report" target="_blank" rel="noreferrer">Open training report</a> · <a class="inline-link" href="/reference-data/pipeline-output.json" target="_blank" rel="noreferrer">Open LiDAR pipeline JSON</a> · <a class="inline-link" href="/reference-data/geometry-preview.svg" target="_blank" rel="noreferrer">View geometry preview</a></p></div></div>
+        <div class="section-head"><div><p class="eyebrow">GATE REGISTER</p><h2>Required checks</h2></div><span class="muted-count">ALL UNRUN</span></div>
+        <div class="matrix-wrap"><table class="data-table gate-table"><thead><tr><th>GATE</th><th>REQUIRED THRESHOLD</th><th>RESULT</th><th>EVIDENCE NEEDED</th></tr></thead><tbody>
+          <tr><td>Opening widths</td><td>≤ 2 cm on ≥ 85% of openings</td><td><span class="result-pending">Not run</span></td><td>Laser truth + detected / missed openings</td></tr>
+          <tr><td>Ceiling height</td><td>≤ 1.5 cm per room; repeat spread ≤ 1 cm</td><td><span class="result-pending">Not run</span></td><td>Room-level ground truth + repeat captures</td></tr>
+          <tr><td>Repeatability</td><td>≤ 1 cm or 0.5% per wall</td><td><span class="result-pending">Not run</span></td><td>Two same-tier captures of one room</td></tr>
+          <tr><td>Photo wall lengths</td><td>±8% with calibrated intervals</td><td><span class="result-pending">Not run</span></td><td>Photo captures + measured wall lengths</td></tr>
+          <tr><td>Video wall lengths</td><td>±3% with calibrated intervals</td><td><span class="result-pending">Not run</span></td><td>Walkthrough video + measured wall lengths</td></tr>
+          <tr><td>Photo whole-property stitch</td><td>Footprint ±8%; correct adjacency; no overlaps</td><td><span class="result-pending">Not run</span></td><td>3+ rooms, connector, per-room photo folders</td></tr>
+          <tr><td>Drift ablation</td><td>Correction on/off footprint comparison</td><td><span class="result-pending">Not run</span></td><td>Multi-room raw trajectory + both outputs</td></tr>
+          <tr><td>Damage &amp; scope</td><td>Per-surface classes, extent, concealed flags</td><td><span class="result-pending">Not run</span></td><td>Staged two-class damage + surface truth</td></tr>
+          <tr><td>Calibration</td><td>Intervals calibrated at every tier</td><td><span class="result-pending">Not run</span></td><td>Held-out captures + interval coverage</td></tr>
+          <tr><td>Incumbent comparison</td><td>Beat or tie ≥70% shared dimensions</td><td><span class="result-pending">Not run</span></td><td>Same two rooms, same-tier exports</td></tr>
+        </tbody></table></div>
+        <p class="table-note">The Drive folder supplies three single-room RGB-D scans, not the specified multi-room benchmark or laser / tape ground truth. Accuracy gates remain unrun.</p>
+      </section>
+
+      <section class="view" id="view-fix-loop" aria-labelledby="fix-title">
+        <div class="page-heading compact-heading"><div><p class="eyebrow">SHIP THE REPAIR</p><h1 id="fix-title">Fix loop <em>record.</em></h1><p class="lede">A reproducible before → diagnosis → after trail, not a post-hoc success story.</p></div><span class="draft-tag">NO RUNS RECORDED</span></div>
+        <div class="fix-status"><span class="fix-status-mark">⟳</span><div><p class="eyebrow">CURRENT STATE</p><h2>Awaiting a measured failure</h2><p>There is no benchmark output to identify a worst-performing gate, so a root-cause claim or predicted improvement would be made up.</p></div></div>
+        <div class="fix-columns"><article><span class="fix-step">01 / BEFORE</span><h3>Record failing number</h3><p>Run the full benchmark against stored raw inputs and ground truth. Name the worst gate and save its exact failing metric.</p><span class="fix-empty">No before run</span></article><article><span class="fix-step">02 / DIAGNOSE</span><h3>State a falsifiable cause</h3><p>Link the hypothesis to evidence from the failing captures. Predict the metric after the change and explain expected side effects.</p><span class="fix-empty">No diagnosis</span></article><article><span class="fix-step">03 / SHIP</span><h3>Replay both runs</h3><p>Commit the fix, regenerate before and after from the same raw bundle, and publish a readable output diff.</p><span class="fix-empty">No after run</span></article></div>
+      </section>
+
+      <section class="view" id="view-compliance" aria-labelledby="compliance-title">
+        <div class="page-heading compact-heading"><div><p class="eyebrow">DELIVERABLES / TRACEABILITY</p><h1 id="compliance-title">Compliance <em>matrix.</em></h1><p class="lede">Every brief requirement mapped to an artifact and a candid status.</p></div><span class="draft-tag">PROTOTYPE COVERAGE</span></div>
+        <div class="matrix-wrap"><table class="data-table compliance-table"><thead><tr><th>REQUIREMENT</th><th>FILE / SURFACE</th><th>ARTIFACT</th><th>STATUS</th></tr></thead><tbody>
+          <tr><td>Three-tier capture intake</td><td><code>app.py</code> · Workspace</td><td>Image folders, video file, LiDAR bundle validation and local storage</td><td><span class="status-chip status-partial">Partial</span></td></tr>
+          <tr><td>One-page capture route + device matrix</td><td>Capture protocol</td><td>Native Camera photo/video guide; LiDAR route explicitly pending</td><td><span class="status-chip status-partial">Partial</span></td></tr>
+          <tr><td>Per-capture output contract</td><td><code>schemas/capture-output.schema.json</code></td><td>Versioned JSON shape; all unmeasured fields null / empty</td><td><span class="status-chip status-partial">Partial</span></td></tr>
+          <tr><td>One command per capture</td><td><code>README.md</code> · CLI</td><td><code>python app.py process &lt;capture_id&gt;</code></td><td><span class="status-chip status-partial">Contract only</span></td></tr>
+          <tr><td>Room plan, damage, intervals, rendered output</td><td>Capture output</td><td>Contract placeholders; no reconstruction implementation</td><td><span class="status-chip status-missing">Not implemented</span></td></tr>
+          <tr><td>Drive scan training baseline</td><td><code>scripts/train_depth_completion.py</code></td><td>Capture-held-out sensor-depth experiment and JSON report</td><td><span class="status-chip status-partial">Sensor only</span></td></tr>
+          <tr><td>Three-tier benchmark + ground truth</td><td>Benchmark ledger</td><td>Drive LiDAR scans available; no photo-tier set or laser truth</td><td><span class="status-chip status-missing">Not run</span></td></tr>
+          <tr><td>Consumer app head-to-head</td><td>Benchmark ledger</td><td>No app export or shared room measurements</td><td><span class="status-chip status-missing">Not run</span></td></tr>
+          <tr><td>Fix loop bundle</td><td>Fix loop record</td><td>Before/after slots; no measured failure or shipped repair</td><td><span class="status-chip status-missing">Not run</span></td></tr>
+          <tr><td>Reproduction + technical report</td><td><code>README.md</code></td><td>Fresh setup and current scope / limitations</td><td><span class="status-chip status-partial">Partial</span></td></tr>
+          <tr><td>Process evidence</td><td>Git history</td><td>Not available in this folder yet</td><td><span class="status-chip status-missing">Not recorded</span></td></tr>
+        </tbody></table></div>
+        <p class="table-note">“Partial” means the workflow or artifact shape exists; it does not mean the case-study accuracy gate has passed.</p>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
